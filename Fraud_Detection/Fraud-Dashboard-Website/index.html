@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>FraudGuard | Fraud Detection Analytics Platform</title>
+  <meta name="description" content="AI-powered fraud detection, data analytics, and risk monitoring dashboard.">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260902c">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <div class="logo-icon">🛡️</div>
+        <div class="logo-copy">
+          <h2>FraudGuard</h2>
+          <span>AI Analytics Platform</span>
+        </div>
+      </div>
+
+      <div class="menu-title">Workspace</div>
+      <button class="nav-item active" type="button" data-section="overview-section"><span class="nav-icon">📊</span><span>Overview</span></button>
+      <button class="nav-item" type="button" data-section="analysis-section"><span class="nav-icon">🚨</span><span>Fraud Analysis</span></button>
+      <button class="nav-item" type="button" data-section="prediction-section"><span class="nav-icon">🤖</span><span>Fraud Prediction</span></button>
+      <button class="nav-item" type="button" data-section="transactions-section"><span class="nav-icon">💳</span><span>Transactions</span></button>
+      <button class="nav-item" type="button" data-section="merchants-section"><span class="nav-icon">🏪</span><span>Merchants</span></button>
+      <button class="nav-item" type="button" data-section="geo-section"><span class="nav-icon">🌍</span><span>Geographic Risk</span></button>
+      <button class="nav-item" type="button" data-section="model-section"><span class="nav-icon">🧠</span><span>Model Insights</span></button>
+      <button class="nav-item" type="button" data-section="reports-section"><span class="nav-icon">📋</span><span>Reports</span></button>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="avatar">VP</div>
+          <div>
+            <strong>Data Analyst</strong>
+            <small>Analytics Workspace</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" type="button" aria-label="Toggle navigation" id="menuToggle">☰</button>
+          <div>
+            <div class="eyebrow">AI-powered fraud intelligence</div>
+            <h1>Fraud Detection Analytics</h1>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="status-pill"><span class="status-dot"></span> System Operational</div>
+          <div class="last-updated">Last updated: <span id="lastUpdated">Just now</span></div>
+          <div class="header-actions">
+            <div class="notification-wrap">
+              <button class="icon-btn" id="notificationButton" type="button" aria-label="Notifications">🔔</button>
+              <div class="notification-panel" id="notificationPanel" aria-live="polite">
+                <div class="panel-header">Notifications</div>
+                <ul id="notificationList"></ul>
+              </div>
+            </div>
+            <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">🌙</button>
+            <button class="icon-btn" id="exportTrigger" type="button" aria-label="Export report">⬇</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="toolbar-bar">
+        <label class="search-box" aria-label="Search transactions">
+          <span>🔍</span>
+          <input id="globalSearch" type="search" placeholder="Search transactions, merchant, risk, status..." autocomplete="off">
+        </label>
+
+        <div class="toolbar-filters">
+          <select id="fraudFilter" aria-label="Filter by fraud status">
+            <option value="all">Fraud Status: All</option>
+            <option value="fraud">Fraud</option>
+            <option value="non-fraud">Non-Fraud</option>
+          </select>
+
+          <select id="merchantFilter" aria-label="Filter by merchant category">
+            <option value="all">Merchant Category: All</option>
+            <option value="Grocery">Grocery</option>
+            <option value="Travel">Travel</option>
+            <option value="Food">Food</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Online">Online</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <select id="riskLevelFilter" aria-label="Filter by risk level">
+            <option value="all">Risk Level: All</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+
+          <select id="foreignFilter" aria-label="Filter by foreign transaction">
+            <option value="all">Foreign: All</option>
+            <option value="true">Foreign</option>
+            <option value="false">Domestic</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="page active" id="overview-section">
+        <div class="hero-panel">
+          <div>
+            <p class="section-kicker">FraudGuard Overview</p>
+            <h2>Transaction intelligence, AI monitoring, and risk analysis</h2>
+          </div>
+          <div class="hero-stats">
+            <span class="hero-badge">📅 <span id="currentDate">Date</span></span>
+            <span class="hero-badge">📊 Risk Trend: <strong id="trendLabel">Stable</strong></span>
+          </div>
+        </div>
+
+        <div class="overview-layout">
+          <div class="risk-overview card">
+            <div class="card-header-row">
+              <div>
+                <p class="section-kicker">Overall Fraud Risk</p>
+                <h3><span id="riskScoreDisplay">78</span> / 100</h3>
+              </div>
+              <span id="riskBadge" class="risk-badge high">HIGH RISK</span>
+            </div>
+            <div class="risk-gauge-wrap">
+              <div class="risk-gauge" id="riskGauge" aria-label="Fraud risk gauge">
+                <div class="risk-gauge-core"><span id="gaugeScore">78</span></div>
+              </div>
+            </div>
+            <p class="risk-summary" id="riskSummaryText">Elevated risk due to unusual velocity, high-value activity, and mismatch signals.</p>
+          </div>
+
+          <div class="insight-panel card">
+            <div class="card-header-row">
+              <div>
+                <p class="section-kicker">Key Insight</p>
+                <h3>Live Data Intelligence</h3>
+              </div>
+            </div>
+            <ul class="insight-list" id="insightList"></ul>
+          </div>
+        </div>
+
+        <section class="kpi-grid" aria-label="Key performance indicators">
+          <article class="kpi-card purple">
+            <div class="kpi-header"><span class="kpi-label">Total Transactions</span><span class="kpi-icon">⇄</span></div>
+            <div class="kpi-value" id="totalTransactions">0</div>
+            <div class="kpi-meta positive">↑ 12.4% vs previous period</div>
+          </article>
+
+          <article class="kpi-card red">
+            <div class="kpi-header"><span class="kpi-label">Fraudulent Transactions</span><span class="kpi-icon">⚠</span></div>
+            <div class="kpi-value" id="fraudTransactions">0</div>
+            <div class="kpi-meta negative">↑ 3.1% compared with prior window</div>
+          </article>
+
+          <article class="kpi-card green">
+            <div class="kpi-header"><span class="kpi-label">Fraud Rate</span><span class="kpi-icon">%</span></div>
+            <div class="kpi-value" id="fraudRate">0%</div>
+            <div class="kpi-meta positive">↑ 2.4% compared with previous period</div>
+          </article>
+
+          <article class="kpi-card blue">
+            <div class="kpi-header"><span class="kpi-label">Total Amount</span><span class="kpi-icon">₹</span></div>
+            <div class="kpi-value" id="totalAmountValue">₹0</div>
+            <div class="kpi-meta neutral">Across all monitored transactions</div>
+          </article>
+
+          <article class="kpi-card orange">
+            <div class="kpi-header"><span class="kpi-label">Average Amount</span><span class="kpi-icon">₹</span></div>
+            <div class="kpi-value" id="averageAmountValue">₹0</div>
+            <div class="kpi-meta neutral">Average order value</div>
+          </article>
+
+          <article class="kpi-card purple">
+            <div class="kpi-header"><span class="kpi-label">Overall Risk Score</span><span class="kpi-icon">◎</span></div>
+            <div class="kpi-value" id="riskScoreKpi">0 / 100</div>
+            <div class="kpi-meta negative" id="riskLevelSummary">HIGH RISK</div>
+          </article>
+        </section>
+
+        <section class="chart-grid">
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Classification</p><h3>Fraud vs Non-Fraud</h3></div></div>
+            <div class="chart-wrap"><canvas id="fraudChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Time analysis</p><h3>Fraud Trend Over Time</h3></div></div>
+            <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">High-risk periods</p><h3>Fraud Rate by Hour</h3></div></div>
+            <div class="chart-wrap"><canvas id="hourChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Merchant behavior</p><h3>Fraud by Merchant Category</h3></div></div>
+            <div class="chart-wrap"><canvas id="merchantChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Amount profiling</p><h3>Transaction Amount Distribution</h3></div></div>
+            <div class="chart-wrap"><canvas id="amountChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Geography</p><h3>Foreign vs Domestic Fraud</h3></div></div>
+            <div class="chart-wrap"><canvas id="domesticChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Location checks</p><h3>Location Mismatch Analysis</h3></div></div>
+            <div class="chart-wrap"><canvas id="locationChart"></canvas></div>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-header-row"><div><p class="section-kicker">Model explanation</p><h3>Feature Importance</h3></div></div>
+            <div class="chart-wrap"><canvas id="featureChart"></canvas></div>
+          </article>
+        </section>
+      </section>
+
+      <section class="page" id="analysis-section">
+        <div class="page-header">
+          <div><p class="section-kicker">Operational review</p><h2>Fraud Analysis</h2></div>
+        </div>
+
+        <div class="two-column-layout">
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Risk monitor</p><h3>Recent Fraud Alerts</h3></div></div>
+            <div id="alertsList" class="alert-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Monitoring</p><h3>Alert Summary</h3></div></div>
+            <ul class="summary-list" id="alertSummaryList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="prediction-section">
+        <div class="page-header"><div><p class="section-kicker">AI decision support</p><h2>Fraud Prediction</h2></div></div>
+
+        <div class="prediction-grid">
+          <div class="card form-card">
+            <form id="predictionForm">
+              <div class="form-grid">
+                <label><span>Transaction Amount</span><input id="amountInput" type="number" min="0" step="1" value="5200"></label>
+                <label><span>Transaction Hour</span><input id="hourInput" type="number" min="0" max="23" value="22"></label>
+                <label><span>Merchant Category</span><select id="merchantInput"><option value="Grocery">Grocery</option><option value="Travel">Travel</option><option value="Food">Food</option><option value="Electronics">Electronics</option><option value="Online">Online</option><option value="Other">Other</option></select></label>
+                <label><span>Foreign Transaction</span><select id="foreignInput"><option value="true">Yes</option><option value="false">No</option></select></label>
+                <label><span>Location Mismatch</span><select id="mismatchInput"><option value="true">Yes</option><option value="false">No</option></select></label>
+                <label><span>Device Trust Score</span><input id="deviceScoreInput" type="number" min="0" max="1" step="0.01" value="0.36"></label>
+                <label><span>Velocity Last 24h</span><input id="velocityInput" type="number" min="0" step="1" value="6"></label>
+                <label><span>Cardholder Age</span><input id="ageInput" type="number" min="18" max="100" value="28"></label>
+              </div>
+              <button class="primary-btn" type="submit">🔍 Analyze Transaction</button>
+            </form>
+          </div>
+
+          <div class="card prediction-result">
+            <div class="result-header"><p class="section-kicker">Prediction Result</p><h3>Fraud Probability</h3></div>
+            <div class="probability-value" id="predictionProbability">0%</div>
+            <div class="risk-line" id="predictionRiskLevel">LOW RISK</div>
+            <div class="result-grid">
+              <div><span>Fraud probability</span><strong id="fraudProbDetail">0%</strong></div>
+              <div><span>Legitimate probability</span><strong id="legitProbDetail">0%</strong></div>
+              <div><span>Risk score</span><strong id="riskScoreDetail">0 / 100</strong></div>
+              <div><span>Recommended action</span><strong id="recommendationDetail">Monitor</strong></div>
+            </div>
+            <div class="factor-block">
+              <h4>Key contributing factors</h4>
+              <ul id="factorList"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="transactions-section">
+        <div class="page-header"><div><p class="section-kicker">Monitoring</p><h2>Transactions</h2></div></div>
+
+        <div class="table-toolbar">
+          <div class="table-filters">
+            <select id="tableStatusFilter"><option value="all">All statuses</option><option value="Safe">Safe</option><option value="Review">Review</option><option value="Fraud">Fraud</option></select>
+            <select id="tableTypeFilter"><option value="all">All types</option><option value="Card">Card</option><option value="Online">Online</option><option value="Cash">Cash</option></select>
+          </div>
+          <div class="table-actions">
+            <button class="secondary-btn" type="button" id="exportCsvButton">Export CSV</button>
+            <button class="secondary-btn" type="button" id="exportPdfButton">Export PDF</button>
+          </div>
+        </div>
+
+        <div class="table-card card">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                  <th>Merchant</th>
+                  <th>Hour</th>
+                  <th>Foreign</th>
+                  <th>Mismatch</th>
+                  <th>Device Trust</th>
+                  <th>Velocity 24h</th>
+                  <th>Age</th>
+                  <th>Risk</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="transactionTableBody"></tbody>
+            </table>
+          </div>
+          <div class="pagination" id="paginationControls"></div>
+        </div>
+      </section>
+
+      <section class="page" id="merchants-section">
+        <div class="page-header"><div><p class="section-kicker">Portfolio overview</p><h2>Merchant Analytics</h2></div></div>
+        <div class="merchant-grid" id="merchantStatsGrid"></div>
+      </section>
+
+      <section class="page" id="geo-section">
+        <div class="page-header"><div><p class="section-kicker">Location risk</p><h2>Geographic Risk</h2></div></div>
+
+        <div class="geo-grid">
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Distribution</p><h3>Domestic vs Foreign Transactions</h3></div></div>
+            <div class="chart-wrap small"><canvas id="geoChart"></canvas></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Mismatch review</p><h3>Location Mismatch Summary</h3></div></div>
+            <ul class="summary-list" id="geographicSummary"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="model-section">
+        <div class="page-header"><div><p class="section-kicker">Model evaluation</p><h2>Model Insights</h2></div></div>
+
+        <div class="metric-grid" id="modelMetricsGrid"></div>
+
+        <div class="two-column-layout">
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Matrix</p><h3>Confusion Matrix</h3></div></div>
+            <div class="confusion-matrix">
+              <div class="matrix-cell strong">TP 310</div>
+              <div class="matrix-cell weak">FP 65</div>
+              <div class="matrix-cell weak">FN 42</div>
+              <div class="matrix-cell strong">TN 583</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-row"><div><p class="section-kicker">Interpretation</p><h3>Model Interpretation</h3></div></div>
+            <p class="model-note">The model identifies suspicious transaction patterns using behavioral, transactional, and contextual features, including device trust, velocity, foreign activity, and transaction timing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="reports-section">
+        <div class="page-header"><div><p class="section-kicker">Portfolio reporting</p><h2>Reports</h2></div></div>
+
+        <div class="report-grid">
+          <button class="report-card" type="button" id="csvReportButton"><span class="report-icon">📄</span><strong>Export CSV</strong><small>Download filtered transaction data</small></button>
+          <button class="report-card" type="button" id="pdfReportButton"><span class="report-icon">📑</span><strong>Export PDF</strong><small>Generate a fraud analytics summary</small></button>
+          <button class="report-card" type="button" id="dashboardReportButton"><span class="report-icon">📊</span><strong>Export Dashboard</strong><small>Open print-ready dashboard view</small></button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="transactionModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" aria-label="Close details">✕</button>
+      <h3 id="modalTitle">Transaction Details</h3>
+      <div id="modalContent" class="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="script.js?v=20260902"></script>
+</body>
+</html>
+```
